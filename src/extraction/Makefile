@@ -35,7 +35,7 @@ USERCMX=$(USERML:%.ml=%.cmx)
 OCAMLC=ocamlc
 OCAMLOPT=ocamlopt
 OCAMLFIND=ocamlfind
-OCAMLFINDLIB=-I +threads -package zarith
+OCAMLFINDLIB=-I +threads -package zarith -package num
 
 
 all: $(LIB) $(PROGRAM)
