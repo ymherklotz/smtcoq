@@ -72,8 +72,10 @@ module type FORM =
       (* Building formula from positive formula *)
       exception NotWellTyped of pform
       type reify
+      val size : reify -> int
       val create : unit -> reify
       val clear : reify -> unit
+      val set : reify -> int -> pform -> t
       val get : ?declare:bool -> reify -> pform -> t
 
       (** Given a coq term, build the corresponding formula *)

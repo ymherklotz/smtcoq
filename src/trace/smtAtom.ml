@@ -815,6 +815,9 @@ module Atom =
 	tbl : hatom HashAtom.t
       }
 
+    let size reify =
+      HashAtom.length reify.tbl
+
     let create () =
       { count = 0;
 	tbl =  HashAtom.create 17 }
@@ -829,6 +832,14 @@ module Atom =
 
     let declare reify a =
       let res = {index = reify.count; hval = a} in
+      HashAtom.add reify.tbl a res;
+      reify.count <- reify.count + 1;
+      res
+
+    let ind h = h.index
+
+    let set reify i a =
+      let res = {index = i; hval = a} in
       HashAtom.add reify.tbl a res;
       reify.count <- reify.count + 1;
       res

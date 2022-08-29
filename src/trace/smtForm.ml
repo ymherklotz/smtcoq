@@ -76,8 +76,10 @@ module type FORM =
     (* Building formula from positive formula *)
     exception NotWellTyped of pform
     type reify
+    val size : reify -> int
     val create : unit -> reify
     val clear : reify -> unit
+    val set : reify -> int -> pform -> t
     val get : ?declare:bool -> reify -> pform -> t
 
     (** Given a coq term, build the corresponding formula *)
@@ -333,6 +335,9 @@ module Make (Atom:ATOM) =
       reify.count <- reify.count + 1;
       res
 
+    let size reify =
+      HashForm.length reify.tbl
+
     let create () =
       let reify =
 	{ count = 0;
@@ -347,6 +352,13 @@ module Make (Atom:ATOM) =
       let _ = declare r pform_true in
       let _ = declare r pform_false in
       ()
+
+    let set reify i pf =
+      let res = { index = i / 2; hval = pf } in
+      let op x = if i mod 2 = 0 then Pos x else Neg x in
+      HashForm.add reify.tbl pf (op res);
+      reify.count <- reify.count + 1;
+      op res
 
     let get ?declare:(decl=true) reify pf =
       if decl then

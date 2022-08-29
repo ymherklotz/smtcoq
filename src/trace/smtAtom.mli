@@ -123,9 +123,15 @@ module Atom :
 
       type reify_tbl
 
+      val size : reify_tbl -> int
+
       val create : unit -> reify_tbl
 
+      val ind : t -> int
+
       val clear : reify_tbl -> unit
+
+      val set : reify_tbl -> int -> atom -> t
 
       val get : ?declare:bool -> reify_tbl -> atom -> t
 
