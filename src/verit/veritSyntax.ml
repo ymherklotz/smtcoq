@@ -493,8 +493,10 @@ let mk_clause (id,typ,value,ids_params) =
 let mk_clause cl =
   try mk_clause cl
   with Failure f ->
+    (Printf.printf "SMTCoq was not able to check the certificate \
+                       for the following reason.\n%s" f; flush stdout;
     CoqInterface.error ("SMTCoq was not able to check the certificate \
-                       for the following reason.\n"^f)
+                       for the following reason.\n"^f))
 
 let apply_dec f (decl, a) = decl, f a
 
